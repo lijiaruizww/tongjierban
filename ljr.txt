@@ -1,0 +1,30 @@
+1Ã‚
+create table GWC(
+    -> id int primary key not null auto_increment,
+    -> favorite varchar(45),
+    -> discount int not null unique,
+-> wish varchar(45));
+insert into GWC(id,favorite,discount,wish) values
+-> (1,"yifu",20,"qunzi")£ª
+insert into GWC(favorite,discount,wish) values
+    -> ("xie",30,"xuezi"),
+    -> ("huazi",40,"dayi"),
+    -> ("wazi",50,"baise"),
+-> ("huazhuangpin",60,"kouhong");
+alter table GWC add isdelete int default 0;
+update GWC set wish="kouhong" where wish="ximiannai ";
+delete from GWC where id=3;
+
+2Ã‚
+source /home/ljr/Desktop/scott.sql;
+show tables£ª
+select*from emp;
+select*from emp where emp.empno not in(select min(empno) from emp group by sal having count(sal) >1);
+
+3Ã‚
+source /home/ljr/Desktop/scott.sql;
+show tables£ª
+select*from emp;
+select max(empno) from emp where sal=3000£ª
+select max(empno) from emp where sal=1250£ª
+select distinct sal from emp where emp.empno not in(select min(empno) from emp group by sal having count(sal) =1);
