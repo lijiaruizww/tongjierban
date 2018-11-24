@@ -1,0 +1,191 @@
+1.SCD£º
+ 1.create table SCD(id int primary key not null auto_increment,
+    -> name varchar(45),
+    -> wupin varchar(45));
+Query OK, 0 rows affected (0.05 sec)
+2. insert into SCD(id,name,wupin) values
+    -> (1,"lll","kouhong");
+Query OK, 1 row affected (0.04 sec)
+3.insert into SCD(name,wupin) values
+    -> ("jjj","car"),
+    -> ("rrr","food"),
+    -> ("ljr","shoubiao");
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+4.delete from SCD where id=3;
+Query OK, 1 row affected (0.00 sec)
+5.select wupin from SCD;
++----------+
+| wupin    |
++----------+
+| kouhong  |
+| car      |
+| shoubiao |
++----------+
+3 rows in set (0.00 sec)
+6.select*from SCD;
++----+------+----------+
+| id | name | wupin    |
++----+------+----------+
+|  1 | lll  | kouhong  |
+|  2 | jjj  | car      |
+|  4 | ljr  | shoubiao |
++----+------+----------+
+3 rows in set (0.00 sec)
+
+2.DY:
+1.create table DY(id int primary key not null auto_increment, film varchar(45), year int not null unique, director varchar(45), fraction int not null unique);
+Query OK, 0 rows affected (0.03 sec)
+2.insert into DY(id,film,year,director,fraction) values (1,"aiqing",1978,"liming",7), (2,"xiju",1988,"wangxiao",6), (3,"kongbu",1975,"liuqiao",8), (4,"gandong",1658,"zhangkai",9);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+3.select* from DY;
++----+---------+------+----------+----------+
+| id | film    | year | director | fraction |
++----+---------+------+----------+----------+
+|  1 | aiqing  | 1978 | liming   |        7 |
+|  2 | xiju    | 1988 | wangxiao |        6 |
+|  3 | kongbu  | 1975 | liuqiao  |        8 |
+|  4 | gandong | 1658 | zhangkai |        9 |
++----+---------+------+----------+----------+
+4 rows in set (0.00 sec)
+4.select * from DY where film like "%xiju%";
++----+------+------+----------+----------+
+| id | film | year | director | fraction |
++----+------+------+----------+----------+
+|  2 | xiju | 1988 | wangxiao |        6 |
++----+------+------+----------+----------+
+1 row in set (0.00 sec)
+5.select * from DY where director like "%liming%";
++----+--------+------+----------+----------+
+| id | film   | year | director | fraction |
++----+--------+------+----------+----------+
+|  1 | aiqing | 1978 | liming   |        7 |
++----+--------+------+----------+----------+
+1 row in set (0.00 sec)
+6.select * from DY where year like "%75";
++----+--------+------+----------+----------+
+| id | film   | year | director | fraction |
++----+--------+------+----------+----------+
+|  3 | kongbu | 1975 | liuqiao  |        8 |
++----+--------+------+----------+----------+
+1 row in set (0.00 sec)
+7.select * from DY where DY.fraction in(select max(fraction) from DY);
++----+---------+------+----------+----------+
+| id | film    | year | director | fraction |
++----+---------+------+----------+----------+
+|  4 | gandong | 1658 | zhangkai |        9 |
++----+---------+------+----------+----------+
+1 row in set (0.00 sec)
+
+3.ZXB
+1. create table YHZXB(id int primary key not null auto_increment,
+    -> name varchar(45),
+    -> time int not null unique,
+    -> way varchar(45));
+Query OK, 0 rows affected (0.03 sec)
+2.insert into YHZXB(id,name,time,way) values (1,"lll",5,"diannao")£»
+Query OK, 1 row affected (0.01 sec)
+3.insert into YHZXB(name,time,way) values ("jjj",6,"pingban"), ("rrr",8,"wangzhan"), ("ljr",10,"phone"), ("zzz",31,"APP");
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+4. select*from YHZXB;
++----+------+------+----------+
+| id | name | time | way      |
++----+------+------+----------+
+|  1 | lll  |    5 | diannao  |
+|  2 | jjj  |    6 | pingban  |
+|  3 | rrr  |    8 | wangzhan |
+|  4 | ljr  |   10 | phone    |
+|  5 | zzz  |   31 | APP      |
++----+------+------+----------+
+5 rows in set (0.00 sec)
+5.alter table YHZXB add duanxin varchar(45);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+6. select*from YHZXB;
++----+------+------+----------+---------+
+| id | name | time | way      | duanxin |
++----+------+------+----------+---------+
+|  1 | lll  |    5 | diannao  | NULL    |
+|  2 | jjj  |    6 | pingban  | NULL    |
+|  3 | rrr  |    8 | wangzhan | NULL    |
+|  4 | ljr  |   10 | phone    | NULL    |
+|  5 | zzz  |   31 | APP      | NULL    |
++----+------+------+----------+---------+
+5 rows in set (0.00 sec)
+7.update YHZXB set duanxin=concat(time>7,"xiaotiancaikuaihuilai");
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+8.select*from YHZXB;
++----+------+------+----------+------------------------+
+| id | name | time | way      | duanxin                |
++----+------+------+----------+------------------------+
+|  1 | lll  |    5 | diannao  | 0xiaotiancaikuaihuilai |
+|  2 | jjj  |    6 | pingban  | 0xiaotiancaikuaihuilai |
+|  3 | rrr  |    8 | wangzhan | 1xiaotiancaikuaihuilai |
+|  4 | ljr  |   10 | phone    | 1xiaotiancaikuaihuilai |
+|  5 | zzz  |   31 | APP      | 1xiaotiancaikuaihuilai |
++----+------+------+----------+------------------------+
+5 rows in set (0.00 sec)
+9. update YHZXB set duanxin=concat (time>9,"nitemedehuibuhuilai");
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+10.select*from YHZXB;
++----+------+------+----------+----------------------+
+| id | name | time | way      | duanxin              |
++----+------+------+----------+----------------------+
+|  1 | lll  |    5 | diannao  | 0nitemedehuibuhuilai |
+|  2 | jjj  |    6 | pingban  | 0nitemedehuibuhuilai |
+|  3 | rrr  |    8 | wangzhan | 0nitemedehuibuhuilai |
+|  4 | ljr  |   10 | phone    | 1nitemedehuibuhuilai |
+|  5 | zzz  |   31 | APP      | 1nitemedehuibuhuilai |
++----+------+------+----------+----------------------+
+5 rows in set (0.00 sec)
+11.update YHZXB set duanxin=concat (time>30,"niqusiba");
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+12.select*from YHZXB;
++----+------+------+----------+-----------+
+| id | name | time | way      | duanxin   |
++----+------+------+----------+-----------+
+|  1 | lll  |    5 | diannao  | 0niqusiba |
+|  2 | jjj  |    6 | pingban  | 0niqusiba |
+|  3 | rrr  |    8 | wangzhan | 0niqusiba |
+|  4 | ljr  |   10 | phone    | 0niqusiba |
+|  5 | zzz  |   31 | APP      | 1niqusiba |
++----+------+------+----------+-----------+
+5 rows in set (0.00 sec)
+
+
+4.SC
+1.source /home/ljr/Desktop/scott.sql;
+Query OK, 0 rows affected (0.00 sec)
+2.select*from emp;
++-------+--------+-----------+------+------------+------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL  | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980/12/17 |  800 |         | 20     |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981/2/20  | 1600 | 300.00  | 30     |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981/2/22  | 1250 | 500.00  | 30     |
+|  7566 | JONES  | MANAGER   | 7839 | 1981/4/2   | 2975 |         | 20     |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981/9/28  | 1250 | 1400.00 | 30     |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981/5/1   | 2850 |         | 30     |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981/6/9   | 2450 |         | 10     |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1987/4/19  | 3000 |         | 20     |
+|  7839 | KING   | PRESIDENT |      | 1981/11/17 | 5000 |         | 10     |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981/9/8   | 1500 | 0.00    | 30     |
+|  7876 | ADAMS  | CLERK     | 7788 | 1987/5/23  | 1100 |         | 20     |
+|  7900 | JAMES  | CLERK     | 7698 | 1981/12/3  |  950 |         | 30     |
+|  7902 | FORD   | ANALYST   | 7566 | 1981/12/3  | 3000 |         | 20     |
+|  7934 | MILLER | CLERK     | 7782 | 1982/1/23  | 1300 |         | 10     |
++-------+--------+-----------+------+------------+------+---------+--------+
+14 rows in set (0.00 sec)
+ 3.select*from emp where emp.empno in(select max(empno) from emp group by sal having count(sal) >1);
++-------+--------+----------+------+-----------+------+---------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE  | SAL  | COMM    | DEPTNO |
++-------+--------+----------+------+-----------+------+---------+--------+
+|  7654 | MARTIN | SALESMAN | 7698 | 1981/9/28 | 1250 | 1400.00 | 30     |
+|  7902 | FORD   | ANALYST  | 7566 | 1981/12/3 | 3000 |         | 20     |
++-------+--------+----------+------+-----------+------+---------+--------+
+2 rows in set (0.00 sec)
